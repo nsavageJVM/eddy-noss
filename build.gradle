@@ -57,3 +57,38 @@ repositories {
         version = theVersion
         group = theGroup
     }
+
+task runEureka(type: Exec) {
+
+    doFirst {
+        println "Starting Eureka Server"
+        File workingDir = new File(project.projectDir, "artifacts")
+        println "RUNNING  Eureka IN  workingDir : ${workingDir}"
+
+        commandLine   "java", "-jar", "${workingDir}/e-server.jar"
+    }
+}
+
+
+task runMicro(type: Exec) {
+
+    doFirst {
+        println "Starting MicroService"
+        File workingDir = new File(project.projectDir, "artifacts")
+        println "RUNNING  MicroService IN  workingDir : ${workingDir}"
+
+        commandLine   "java", "-jar", "${workingDir}/s-micro.jar"
+    }
+}
+
+
+task runMicroServer(type: Exec) {
+
+    doFirst {
+        println "Starting Micro Server"
+        File workingDir = new File(project.projectDir, "artifacts")
+        println "RUNNING  Micro Server  IN  workingDir : ${workingDir}"
+
+        commandLine   "java", "-jar", "${workingDir}/s-micro-srv.jar"
+    }
+}

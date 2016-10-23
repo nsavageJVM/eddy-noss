@@ -1,0 +1,47 @@
+apply plugin: 'spring-boot'
+apply plugin: "io.spring.dependency-management"
+
+jar {
+    baseName = 's-micro-srv'
+    version = theVersion
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-netflix:1.0.7.RELEASE'
+        mavenBom 'io.spring.platform:platform-bom:2.0.3.RELEASE'
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+}
+
+bootRun {
+    systemProperties System.properties
+}
+
+task  deployArtifact (type: Copy, dependsOn: 'bootRepackage') {
+
+    File deployFolder = new File(project.parent.projectDir, "artifacts")
+    File targetFolder = new File(project.parent.projectDir, "eddy-simple-micro-server/build/libs/s-micro-srv-0.0.1-SNAPSHOT.jar")
+
+    println("deployFolder = ${deployFolder.absolutePath}")
+    println("targetFolder = ${targetFolder.absolutePath}")
+
+    from targetFolder
+    into deployFolder
+    rename { filename ->
+        filename.replace 's-micro-srv-0.0.1-SNAPSHOT', 's-micro-srv'
+    }
+
+
+}
+
+task "create-dirs" << {
+    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
