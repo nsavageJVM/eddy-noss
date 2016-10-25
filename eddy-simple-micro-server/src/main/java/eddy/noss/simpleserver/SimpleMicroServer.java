@@ -6,6 +6,7 @@ import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,6 +30,12 @@ public class SimpleMicroServer {
     public String home() {
         return "This is a trivial service that demonstrates how a Eureka Client\n " +
                 "can register with a Eureka Server and discover services";
+    }
+
+    @RequestMapping(value = "/feign", method = RequestMethod.GET)
+    public String feignRestEndPoint() {
+        return "This is a trivial endpoint that demonstrates how a Eureka Client\n " +
+                "can register with a Eureka Server and provide services to a Feign rest client";
     }
 
 

@@ -96,10 +96,24 @@ task runMicroServer(type: Exec) {
 task runCBreaker(type: Exec) {
 
     doFirst {
-        println "Starting Micro Server"
+        println "Starting Circuit Breaker"
         File workingDir = new File(project.projectDir, "artifacts")
-        println "RUNNING  Micro Server  IN  workingDir : ${workingDir}"
+        println "RUNNING  Circuit Breaker  IN  workingDir : ${workingDir}"
 
         commandLine   "java", "-jar", "${workingDir}/s-hystrix.jar"
     }
 }
+
+task runClient(type: Exec) {
+
+    doFirst {
+        println "Starting Rest Client"
+        File workingDir = new File(project.projectDir, "artifacts")
+        println "RUNNING  Rest Client  IN  workingDir : ${workingDir}"
+
+        commandLine   "java", "-jar", "${workingDir}/s-micro-client.jar"
+    }
+}
+
+
+

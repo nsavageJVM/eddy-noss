@@ -1,0 +1,49 @@
+apply plugin: 'spring-boot'
+apply plugin: "io.spring.dependency-management"
+
+jar {
+    baseName = 's-micro-client'
+    version = theVersion
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-netflix:1.0.7.RELEASE'
+        mavenBom 'io.spring.platform:platform-bom:2.0.3.RELEASE'
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
+    compile 'org.springframework.cloud:spring-cloud-starter-feign'
+}
+
+bootRun {
+    systemProperties System.properties
+}
+
+task  deployArtifact (type: Copy, dependsOn: 'bootRepackage') {
+
+    File deployFolder = new File(project.parent.projectDir, "artifacts")
+    File targetFolder = new File(project.parent.projectDir, "eddy-micro-client/build/libs/s-micro-client-0.0.1-SNAPSHOT.jar")
+
+    println("deployFolder = ${deployFolder.absolutePath}")
+    println("targetFolder = ${targetFolder.absolutePath}")
+
+    from targetFolder
+    into deployFolder
+    rename { filename ->
+        filename.replace 's-micro-client-0.0.1-SNAPSHOT', 's-micro-client'
+    }
+
+
+}
+
+task "create-dirs" << {
+    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}

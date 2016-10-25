@@ -1,2 +1,2 @@
-include  'eddy-eureka-server', 'eddy-simple-micro', 'eddy-simple-micro-server', 'eddy-micros-hystrix'
+include  'eddy-eureka-server', 'eddy-simple-micro', 'eddy-simple-micro-server', 'eddy-micros-hystrix',  'eddy-micro-client'
 
