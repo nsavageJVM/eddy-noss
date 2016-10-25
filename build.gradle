@@ -92,3 +92,14 @@ task runMicroServer(type: Exec) {
         commandLine   "java", "-jar", "${workingDir}/s-micro-srv.jar"
     }
 }
+
+task runCBreaker(type: Exec) {
+
+    doFirst {
+        println "Starting Micro Server"
+        File workingDir = new File(project.projectDir, "artifacts")
+        println "RUNNING  Micro Server  IN  workingDir : ${workingDir}"
+
+        commandLine   "java", "-jar", "${workingDir}/s-hystrix.jar"
+    }
+}

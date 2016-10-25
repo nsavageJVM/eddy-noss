@@ -21,6 +21,8 @@ public class SimpleMicro {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleMicro.class);
 
+    private static final String SERVER_SERVICE_NAME = "SMICROSERVER";
+
     @Autowired
     DiscoveryClient discoveryClient;
 
@@ -36,7 +38,7 @@ public class SimpleMicro {
 
     @RequestMapping("/")
     String home() {
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka("SMICROSERVER", false);
+        InstanceInfo instance = discoveryClient.getNextServerFromEureka(SERVER_SERVICE_NAME, false);
         String homePageUrl = instance.getHomePageUrl();
 
         log.info("Got homepage url {}", homePageUrl);
