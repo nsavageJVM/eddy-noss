@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by ubu on 25.10.16.
- * https://raw.githubusercontent.com/nsavageJVM/eddy-noss/master/readme.md
  */
-@FeignClient( url = "http://httpbin.org" )
+@FeignClient( url = "http://httpbin.org"  )
 public interface ExternalServiceProvider {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

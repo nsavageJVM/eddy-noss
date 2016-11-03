@@ -28,7 +28,7 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/ext-client-feign", method = GET)
-    public String getRates() {
+    public String getHttpBin() {
 
         if(Objects.isNull(externalServiceProvider)) {
             return "service provider is null ";
